@@ -8,10 +8,37 @@
 import java.util.LinkedList;
 
 
-public class LLStack<T> implements Stack<T> {
+public class LLStack<T> implements Stack<T> {    
+    private LinkedList<T> _stack;
 
+    //default constructor
+    public LLStack() {
+	_stack = new LinkedList<T>();
+    }
 
+    //Return true if this stack is empty, otherwise false.
+    public boolean isEmpty() {
+	return _stack.size() == 0;
+    }
 
+    //Return top element of stack without popping it.
+    public T peek() {
+	if (isEmpty())
+	    return null;
+	return _stack.getLast();
+    }
+
+    //Pop and return top element of stack.
+    public T pop() {
+	if (isEmpty())
+	    return null;
+	return _stack.removeLast();
+    }
+
+    //Push an element onto top of this stack.
+    public void	push( T x ) {
+	_stack.add(x);
+    }
 
     //main method for testing
     public static void main( String[] args ) {
