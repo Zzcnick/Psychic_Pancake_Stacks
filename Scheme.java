@@ -42,8 +42,8 @@ public class Scheme {
 	    if (expr.substring(i,i+1).equals(" "))
 		spaces.add(i);
 	spaces.add(length); // Last parsing location
-
-	// Add parsing indices
+  
+	// Add parsing indices aka. indexes to skip spaces
 	int[][] locations = new int[spaces.size()][2];
 	int lastStart = 0; // Previous parse
 	for (int i = 0; i < spaces.size(); i++) {
@@ -61,9 +61,9 @@ public class Scheme {
 	}
 	**/
 
-	Latkes<String> expressions = new Latkes<String>(length);
+	Latkes<String> expressions = new Latkes<String>(length); //basically the scheme string without spaces (easier for code to read)
 	Latkes<String> operations  = new Latkes<String>(length); //stack of operations to perform
-	Latkes<String> evaluation  = new Latkes<String>(length); //stack of numbers to perform current operation on.
+	Latkes<String> evaluation  = new Latkes<String>(length); //stack of numbers to perform current operation on
 	int i   = 0; // Parsing Index
 	String initial = null; // Initial number
 
@@ -74,13 +74,13 @@ public class Scheme {
 	    // System.out.println(expressions.peek()); // Debugging
 	    
 	    if (expressions.peek().equals("(")) {
-		i++;  //Once open paren spotted add operation associated with paren to stack
+		i++;  //Once open paren spotted add operation associated with paren to operation stack, i++ to prevent operation sign added to expression.
 		operations.push(expr.substring(locations[i][0], locations[i][1]));  
 	    }
-	    else if (expressions.peek().equals(")")) {
+	    else if (expressions.peek().equals(")")) {  //Once reach end parens evaluate all numbers in paren using top of operation stack
 		expressions.pop(); // Removes )
 		while (!expressions.peek().equals("("))
-		    evaluation.push(expressions.pop());
+		    evaluation.push(expressions.pop()); //push each number that needs to be evaluated to evaluation stack
 		expressions.pop(); // Removes (
 		int tmp = Integer.parseInt(evaluation.pop()); //1st number to perform operation on
 		while (!evaluation.isEmpty()){
@@ -95,7 +95,7 @@ public class Scheme {
 		expressions.push("" + tmp); //Add evaluated number 
 		operations.pop();  //Current operation sign "used up"
 	    }
-	    i++;
+	    i++;  //if not open or close paren (then just a number) continue to add
 	}
 	return expressions.pop(); //last number to remain in expressions is final answer
     }//end evaluate()
