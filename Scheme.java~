@@ -105,51 +105,29 @@ public class Scheme {
     public static void main( String[] args ) {
 
 	String zoo1 = "( + 4 3 )";
-	System.out.println("zoo1: " +zoo1+ "Should be 7");
+	System.out.println(zoo1);
 	System.out.println("zoo1 eval'd: " + evaluate(zoo1) );
 	//...7
 
-	System.out.println();
-	
 	String zoo2 = "( + 4 ( * 2 5 ) 3 )";
-	System.out.println("zoo2: " +zoo2+ "Should be 17");
+	System.out.println(zoo2);
 	System.out.println("zoo2 eval'd: " + evaluate(zoo2) );
 	//...17
 
-	System.out.println();
-
 	String zoo3 = "( + 4 ( * 2 5 ) 6 3 ( - 56 50 ) )";
-	System.out.println("zoo3: " +zoo3+ "Should be 29");
+	System.out.println(zoo3);
 	System.out.println("zoo3 eval'd: " + evaluate(zoo3) );
 	//...29
-
-	System.out.println();
 	
 	String zoo4 = "( - 1 2 3 )";
-	System.out.println("zoo4: " +zoo4+ "Should be -4");
+	System.out.println(zoo4);
 	System.out.println("zoo4 eval'd: " + evaluate(zoo4) );
 	//...-4
 
-	System.out.println();
-	
 	String zoo5 = "( * 3 ( + ( - 7 4 ) 8 ) 2 )";
-	System.out.println("zoo5: " +zoo5+ "Should be 66");
+	System.out.println(zoo5);
 	System.out.println("zoo5 eval'd: " + evaluate(zoo5) );
 	//...66
-
-	System.out.println();
-
-	String zoo6 = "( * 2 ( - ( * 2 3 ) 7 ) 1 )";
- 	System.out.println("zoo6: " +zoo6+ "Should be -2");
-	System.out.println("zoo6 eval'd: " + evaluate(zoo6));
-	//...-2
-
-	System.out.println();
-
-	String zoo7 = "( * 2 ( * 2 2 ) ( * 2 2 ) 2 )";
-	System.out.println("zoo7: " +zoo7+ "Should be 64");
-	System.out.println("zoo6 eval'd: " + evaluate(zoo7));
-	//...64
 	
 	/*v~~~~~~~~~~~~~~MAKE MORE~~~~~~~~~~~~~~v
           ^~~~~~~~~~~~~~~~AWESOME~~~~~~~~~~~~~~~^*/
