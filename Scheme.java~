@@ -36,9 +36,7 @@ public class Scheme {
     public static String evaluate( String expr ) 
     {
 	// Length variable
-	int length = expr.length();
-
-	// Track location of spaces
+	int length = expr.	// Track location of spaces
 	ArrayList<Integer> spaces = new ArrayList<Integer>(length);
 	for (int i = 0; i < length; i++)
 	    if (expr.substring(i,i+1).equals(" "))
@@ -64,8 +62,8 @@ public class Scheme {
 	**/
 
 	Latkes<String> expressions = new Latkes<String>(length);
-	Latkes<String> operations  = new Latkes<String>(length);
-	Latkes<String> evaluation  = new Latkes<String>(length);
+	Latkes<String> operations  = new Latkes<String>(length); //stack of operations to perform
+	Latkes<String> evaluation  = new Latkes<String>(length); //stack of numbers to perform current operation on.
 	int i   = 0; // Parsing Index
 	String initial = null; // Initial number
 
@@ -83,9 +81,9 @@ public class Scheme {
 		while (!expressions.peek().equals("("))
 		    evaluation.push(expressions.pop());
 		expressions.pop(); // Removes (
-		int tmp = Integer.parseInt(evaluation.pop());
+		int tmp = Integer.parseInt(evaluation.pop()); //1st number to perform operation on
 		while (!evaluation.isEmpty()){
-		    int number = Integer.parseInt(evaluation.pop());
+		    int number = Integer.parseInt(evaluation.pop()); //2nd number to perform operation on
 		    if (operations.peek().equals("+"))
 			tmp += number;
 		    if (operations.peek().equals("*"))
@@ -93,41 +91,63 @@ public class Scheme {
 		    if (operations.peek().equals("-"))
 			tmp -= number;
 		}
-		expressions.push("" + tmp);
-		operations.pop();
+		expressions.push("" + tmp); //Add evaluated number 
+		operations.pop();  //Current operation sign "used up"
 	    }
 	    i++;
 	}
-	return expressions.pop();
+	return expressions.pop(); //last number to remain in expressions is final answer
     }//end evaluate()
 
     //main method for testing
     public static void main( String[] args ) {
 
 	String zoo1 = "( + 4 3 )";
-	System.out.println(zoo1);
+	System.out.println("zoo1: " +zoo1+ "Should be 7");
 	System.out.println("zoo1 eval'd: " + evaluate(zoo1) );
 	//...7
 
+	System.out.println();
+	
 	String zoo2 = "( + 4 ( * 2 5 ) 3 )";
-	System.out.println(zoo2);
+	System.out.println("zoo2: " +zoo2+ "Should be 17");
 	System.out.println("zoo2 eval'd: " + evaluate(zoo2) );
 	//...17
 
+	System.out.println();
+
 	String zoo3 = "( + 4 ( * 2 5 ) 6 3 ( - 56 50 ) )";
-	System.out.println(zoo3);
+	System.out.println("zoo3: " +zoo3+ "Should be 29");
 	System.out.println("zoo3 eval'd: " + evaluate(zoo3) );
 	//...29
+
+	System.out.println();
 	
 	String zoo4 = "( - 1 2 3 )";
-	System.out.println(zoo4);
+	System.out.println("zoo4: " +zoo4+ "Should be -4");
 	System.out.println("zoo4 eval'd: " + evaluate(zoo4) );
 	//...-4
 
+	System.out.println();
+	
 	String zoo5 = "( * 3 ( + ( - 7 4 ) 8 ) 2 )";
-	System.out.println(zoo5);
+	System.out.println("zoo5: " +zoo5+ "Should be 66");
 	System.out.println("zoo5 eval'd: " + evaluate(zoo5) );
 	//...66
+
+	System.out.println();
+
+	String zoo6 = "( * 2 ( - ( * 2 3 ) 7 ) 1 )";
+ 	System.out.println("zoo6: " +zoo6+ "Should be -2");
+	System.out.println("zoo6 eval'd: " + evaluate(zoo6));
+	//...-2
+
+	System.out.println();
+
+	String zoo7 = "( * 2 ( * 2 2 ) ( * 2 2 ) 2 )";
+	System.out.println("zoo7: " +zoo7+ "Should be 64");
+	System.out.println("zoo6 eval'd: " + evaluate(zoo7));
+	//...64
 	
 	/*v~~~~~~~~~~~~~~MAKE MORE~~~~~~~~~~~~~~v
           ^~~~~~~~~~~~~~~~AWESOME~~~~~~~~~~~~~~~^*/

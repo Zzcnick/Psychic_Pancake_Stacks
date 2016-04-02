@@ -36,9 +36,7 @@ public class Scheme {
     public static String evaluate( String expr ) 
     {
 	// Length variable
-	int length = expr.length();
-
-	// Track location of spaces
+	int length = expr.length();	// Track location of spaces
 	ArrayList<Integer> spaces = new ArrayList<Integer>(length);
 	for (int i = 0; i < length; i++)
 	    if (expr.substring(i,i+1).equals(" "))
@@ -64,8 +62,8 @@ public class Scheme {
 	**/
 
 	Latkes<String> expressions = new Latkes<String>(length);
-	Latkes<String> operations  = new Latkes<String>(length);
-	Latkes<String> evaluation  = new Latkes<String>(length);
+	Latkes<String> operations  = new Latkes<String>(length); //stack of operations to perform
+	Latkes<String> evaluation  = new Latkes<String>(length); //stack of numbers to perform current operation on.
 	int i   = 0; // Parsing Index
 	String initial = null; // Initial number
 
@@ -76,16 +74,17 @@ public class Scheme {
 	    // System.out.println(expressions.peek()); // Debugging
 	    
 	    if (expressions.peek().equals("(")) {
-		i++;
-		operations.push(expr.substring(locations[i][0], locations[i][1]));
-	    } else if (expressions.peek().equals(")")) {
+		i++;  //Once open paren spotted add operation associated with paren to stack
+		operations.push(expr.substring(locations[i][0], locations[i][1]));  
+	    }
+	    else if (expressions.peek().equals(")")) {
 		expressions.pop(); // Removes )
 		while (!expressions.peek().equals("("))
 		    evaluation.push(expressions.pop());
 		expressions.pop(); // Removes (
-		int tmp = Integer.parseInt(evaluation.pop());
+		int tmp = Integer.parseInt(evaluation.pop()); //1st number to perform operation on
 		while (!evaluation.isEmpty()){
-		    int number = Integer.parseInt(evaluation.pop());
+		    int number = Integer.parseInt(evaluation.pop()); //2nd number to perform operation on
 		    if (operations.peek().equals("+"))
 			tmp += number;
 		    if (operations.peek().equals("*"))
@@ -93,12 +92,12 @@ public class Scheme {
 		    if (operations.peek().equals("-"))
 			tmp -= number;
 		}
-		expressions.push("" + tmp);
-		operations.pop();
+		expressions.push("" + tmp); //Add evaluated number 
+		operations.pop();  //Current operation sign "used up"
 	    }
 	    i++;
 	}
-	return expressions.pop();
+	return expressions.pop(); //last number to remain in expressions is final answer
     }//end evaluate()
 
     //main method for testing
